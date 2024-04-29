@@ -1,0 +1,13 @@
+{
+  "entryPoints": [
+    "./src/Card.ts",
+    "./src/CardCollection.ts",
+    "./src/server.ts",
+    "./src/operations/AddCard.ts",
+    "./src/operations/DeleteCard.ts",
+    "./src/operations/ListCards.ts",
+    "./src/operations/ModifyCard.ts",
+    "./src/operations/ShowCard.ts",
+  ],
+  "out": "./docs"
+}
