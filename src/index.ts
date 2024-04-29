@@ -1,9 +1,11 @@
 import express from "express"
 import "./db/mongoose.js";
+import { defaultRouter } from "./routers/default.js";
 import { customerRouter } from "./routers/customer.js";
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
+app.use(defaultRouter);
 app.use(customerRouter);
 
 app.listen(port, () => {
