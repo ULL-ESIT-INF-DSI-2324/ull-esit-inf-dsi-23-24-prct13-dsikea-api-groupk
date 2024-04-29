@@ -1,9 +1,10 @@
 import { Document, Schema, model } from "mongoose";
+import validator from "validator"
 
 interface CustomerDocumentInterface extends Document {
   name: string;
   surname: string;
-  telephoneNumber: number;
+  telephoneNumber: string;
   email?: string;
   address: string;
   postalCode: number;
@@ -22,7 +23,7 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
     required: true,
   },
   telephoneNumber: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
     validate: (value: string) => {
@@ -50,7 +51,9 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
   },
   gender: {
     type: String,
-    enum: ["male", "female", "other"],
+    validator: (value: string) => {
+      return ["male", "female", "other"].includes(value.toLowerCase()); 
+    }
   },
   nif: {
     type: String,
@@ -59,6 +62,9 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
     validate: (value: string) => {
       if (!value.match(/^[0-9]{8}[a-zA-Z]/)) {
         throw new Error("Invalid Nif");
+      }
+      else if (!validator.isAlphanumeric(value)) {
+        throw new Error("Only Alphanumeric characters are allowed");
       }
     }
   },
