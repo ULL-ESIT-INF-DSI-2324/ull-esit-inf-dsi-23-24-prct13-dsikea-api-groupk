@@ -12,6 +12,29 @@ customerRouter.post("/customers", (req, res) => {
   });
 });
 
+customerRouter.get("/customers", (req, res) => {
+  const nif = req.query.nif;
+  if (nif) {
+    Customer.find({nif: nif}).then((customer) => {
+      if (!customer) res.status(404).send("Customer not found");
+      else res.status(200).send(customer);
+    }).catch((error) => {
+      res.status(400).send(error);
+    });
+  } else {
+    res.status(400).send("Nif not provided");
+  }
+});
+
+customerRouter.get("/customers/:id", (req, res) => {
+  Customer.findById(req.params.id).then((customer) => {
+      if (!customer) res.status(404).send("Customer not found");
+      else res.status(200).send(customer);
+    }).catch((error) => {
+      res.status(400).send(error);
+    });
+});
+
 customerRouter.patch("/customers", (req, res) => {
   const nif = req.query.nif;
   if (nif) {
@@ -73,8 +96,7 @@ customerRouter.delete("/customers", (req, res) => {
 });
 
 customerRouter.delete("/customers/:id", (req, res) => {
-  const id = req.params.id;
-    Customer.findOneAndDelete({_id: id}).then((customer) => {
+    Customer.findByIdAndDelete(req.params.id).then((customer) => {
       if (!customer) res.status(404).send("Customer not found");
       else res.status(200).send(customer);
     }).catch((error) => {
