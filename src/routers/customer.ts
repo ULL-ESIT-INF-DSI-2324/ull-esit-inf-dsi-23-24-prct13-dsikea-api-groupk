@@ -20,8 +20,19 @@ customerRouter.delete("/customers", (req, res) => {
       else res.status(200).send(customer);
     }).catch((error) => {
       res.status(400).send(error);
-    })
+    });
   } else {
     res.status(400).send("Nif not provided");
   }
-})
+});
+
+customerRouter.delete("/customers/:id", (req, res) => {
+  const id = req.params.id;
+    Customer.findOneAndDelete({_id: id}).then((customer) => {
+      if (!customer) res.status(404).send("Customer not found");
+      else res.status(200).send(customer);
+    }).catch((error) => {
+      res.status(400).send(error);
+    });
+});
+
