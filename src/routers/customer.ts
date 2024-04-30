@@ -7,8 +7,8 @@ customerRouter.post("/customers", (req, res) => {
   const customer = new Customer(req.body);
   customer
     .save()
-    .then((note) => {
-      res.status(200).send(note);
+    .then((customer) => {
+      res.status(200).send(customer);
     })
     .catch((error) => {
       res.status(400).send(error);
