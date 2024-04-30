@@ -16,13 +16,16 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
   name: {
     type: String,
     required: true,
+    lowercase: true
   },
   description: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   category: {
     type: String,
+    lowercase: true
   },
   dimensions: {
     type: String,
@@ -31,17 +34,21 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
       if (!value.match(/^\d+x\d+x\d+/)) {
         throw new Error("Dimensions format not valid");
       }
-    }
+    },
+    lowercase: true
   },
   materials: {
     type: [String],
+    lowercase: true
   },
   color: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   style: {
     type: String,
+    lowercase: true
   },
   price: {
     type: Number,

@@ -1,10 +1,10 @@
-import express from "express"
-import { Furniture } from "../models/furniture.js"
+import express from "express";
+import { Furniture } from "../models/furniture.js";
 
-interface QueryInterface {
-  name?: string,
-  color?: string,
-  description?: { $regex: string, $options: string }
+interface FilterInterface {
+  name?: string;
+  color?: string;
+  description?: { $regex: string; $options: string };
 }
 
 export const furnitureRouter = express.Router();
@@ -23,16 +23,21 @@ furnitureRouter.post("/furnitures", (req, res) => {
 
 furnitureRouter.get("/furnitures", (req, res) => {
   if (Object.keys(req.query).length !== 0) {
-    const query: QueryInterface = {};
-    if (req.query.name) query.name = req.query.name as string;
-    if (req.query.color) query.color = req.query.color as string;
-    if (req.query.description) query.description = {$regex: req.query.description as string, $options: "i"};
-    Furniture.find(query).then((furnitures) => {
-      if (furnitures.length !== 0) {
-        res.status(200).send(furnitures);
-      } else {
-        res.status(404).send("Furniture not found");
-      } 
+    const filter: FilterInterface = {};
+    if (req.query.name) filter.name = req.query.name as string;
+    if (req.query.color) filter.color = req.query.color as string;
+    if (req.query.description)
+      filter.description = {
+        $regex: req.query.description as string,
+        $options: "i",
+      };
+    Furniture.find(filter)
+      .then((furnitures) => {
+        if (furnitures.length !== 0) {
+          res.status(200).send(furnitures);
+        } else {
+          res.status(404).send("Furniture not found");
+        }
       })
       .catch((error) => {
         res.status(400).send(error);
@@ -54,17 +59,25 @@ furnitureRouter.get("/furnitures/:id", (req, res) => {
 });
 
 furnitureRouter.patch("/furnitures", (req, res) => {
-  const nif = req.query.nif;
-  if (nif) {
+  if (Object.keys(req.query).length !== 0) {
+    const filter: FilterInterface = {};
+    if (req.query.name) filter.name = req.query.name as string;
+    if (req.query.color) filter.color = req.query.color as string;
+    if (req.query.description)
+      filter.description = {
+        $regex: req.query.description as string,
+        $options: "i",
+      };
     const allowedUpdates = [
       "name",
-      "surname",
-      "telephoneNumber",
-      "email",
-      "address",
-      "postalCode",
-      "city",
-      "gender",
+      "description",
+      "category",
+      "dimensions",
+      "materials",
+      "color",
+      "style",
+      "price",
+      "imageUrl",
     ];
     const actualUpdates = Object.keys(req.body);
     const isValidUpdate = actualUpdates.every((update) =>
@@ -74,31 +87,32 @@ furnitureRouter.patch("/furnitures", (req, res) => {
     if (!isValidUpdate) {
       res.status(400).send("Update not permitted");
     } else {
-      Furniture.findOneAndUpdate({ nif: nif }, req.body, {
+      Furniture.findOneAndUpdate(filter, req.body, {
         new: true,
         runValidators: true,
       })
         .then((furniture) => {
-          if (!furniture) res.status(404).send("furniture not found");
+          if (!furniture) res.status(404).send("Furniture not found");
           else res.status(200).send(furniture);
         })
         .catch((error) => {
           res.status(400).send(error);
         });
     }
-  } else res.status(400).send("Nif not provided");
+  } else res.status(400).send("Query params not provided");
 });
 
 furnitureRouter.patch("/furnitures/:id", (req, res) => {
   const allowedUpdates = [
     "name",
-    "surname",
-    "telephoneNumber",
-    "email",
-    "address",
-    "postalCode",
-    "city",
-    "gender",
+    "description",
+    "category",
+    "dimensions",
+    "materials",
+    "color",
+    "style",
+    "price",
+    "imageUrl",
   ];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) =>
@@ -113,7 +127,7 @@ furnitureRouter.patch("/furnitures/:id", (req, res) => {
       runValidators: true,
     })
       .then((furniture) => {
-        if (!furniture) res.status(404).send("furniture not found");
+        if (!furniture) res.status(404).send("Furniture not found");
         else res.status(200).send(furniture);
       })
       .catch((error) => {
@@ -123,18 +137,25 @@ furnitureRouter.patch("/furnitures/:id", (req, res) => {
 });
 
 furnitureRouter.delete("/furnitures", (req, res) => {
-  const nif = req.query.nif;
-  if (nif) {
-    Furniture.findOneAndDelete({ nif: nif })
+  if (Object.keys(req.query).length !== 0) {
+    const filter: FilterInterface = {};
+    if (req.query.name) filter.name = req.query.name as string;
+    if (req.query.color) filter.color = req.query.color as string;
+    if (req.query.description)
+      filter.description = {
+        $regex: req.query.description as string,
+        $options: "i",
+      };
+    Furniture.findOneAndDelete(filter)
       .then((furniture) => {
-        if (!furniture) res.status(404).send("furniture not found");
+        if (!furniture) res.status(404).send("Furniture not found");
         else res.status(200).send(furniture);
       })
       .catch((error) => {
         res.status(400).send(error);
       });
   } else {
-    res.status(400).send("Nif not provided");
+    res.status(400).send("Query params not provided");
   }
 });
 
