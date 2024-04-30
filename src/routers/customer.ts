@@ -18,10 +18,12 @@ customerRouter.post("/customers", (req, res) => {
 customerRouter.get("/customers", (req, res) => {
   const nif = req.query.nif;
   if (nif) {
-    Customer.find({ nif: nif })
-      .then((customer) => {
-        if (!customer) res.status(404).send("Customer not found");
-        else res.status(200).send(customer);
+    Customer.find({nif: nif}).then((customers) => {
+      if (customers.length !== 0) {
+        res.status(200).send(customers);
+      } else {
+        res.status(404).send("Customer not found");
+      } 
       })
       .catch((error) => {
         res.status(400).send(error);

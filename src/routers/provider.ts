@@ -18,10 +18,12 @@ providerRouter.post("/providers", (req, res) => {
 providerRouter.get("/providers", (req, res) => {
   const cif = req.query.cif;
   if (cif) {
-    Provider.find({ cif: cif })
-      .then((provider) => {
-        if (!provider) res.status(404).send("Provider not found");
-        else res.status(200).send(provider);
+    Provider.find({cif: cif}).then((providers) => {
+      if (providers.length !== 0) {
+        res.status(200).send(providers);
+      } else {
+        res.status(404).send("Provider not found");
+      } 
       })
       .catch((error) => {
         res.status(400).send(error);
