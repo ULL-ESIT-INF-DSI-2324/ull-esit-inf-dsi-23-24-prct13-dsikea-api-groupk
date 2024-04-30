@@ -26,7 +26,7 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
     type: String,
     required: true,
     unique: true,
-    validator: (value: string) => {
+    validate: (value: string) => {
       // Permite diferentes formatos de número de teléfono
       if (!value.match(/^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/)) {
         throw new Error("Telephone number format is not valid");
@@ -36,7 +36,7 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
   email: {
     type: String,
     unique: true,
-    validator: (value: string) => {
+    validate: (value: string) => {
       if (!value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
         throw new Error("Email format is not valid");
       }
@@ -56,7 +56,7 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
   },
   gender: {
     type: String,
-    validator: (value: string) => {
+    validate: (value: string) => {
       return ["male", "female", "other"].includes(value.toLowerCase()); 
     }
   },
@@ -64,7 +64,7 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
     type: String,
     unique: true,
     required: true,
-    validator: (value: string) => {
+    validate: (value: string) => {
       if (!value.match(/^[0-9]{8}[a-zA-Z]/)) {
         throw new Error("Invalid Nif");
       }
