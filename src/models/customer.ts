@@ -1,7 +1,7 @@
 import { Document, Schema, model } from "mongoose";
 import validator from "validator"
 
-interface CustomerDocumentInterface extends Document {
+export interface CustomerDocumentInterface extends Document {
   name: string;
   surname: string;
   telephoneNumber: string;

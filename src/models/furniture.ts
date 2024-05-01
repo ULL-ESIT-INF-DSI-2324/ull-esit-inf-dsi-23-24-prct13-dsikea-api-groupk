@@ -1,6 +1,6 @@
 import { Document, Schema, model} from "mongoose"
 
-interface FurnitureDocumentInterface extends Document {
+export interface FurnitureDocumentInterface extends Document {
   name: string,
   description: string,
   category?: string,
