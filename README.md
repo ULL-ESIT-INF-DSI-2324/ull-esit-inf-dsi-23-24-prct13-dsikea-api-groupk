@@ -133,7 +133,7 @@ ustomerRouter.post("/customers", (req, res) => {
 });
 ```
 
-Después lo que haremos será definir dos getters, uno buscándolo por si nif y el otro buscándolo por su id.
+Después lo que haremos será definir dos getters, uno buscándolo por su nif y el otro buscándolo por su id.
 
 ```
 
