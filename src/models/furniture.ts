@@ -13,6 +13,7 @@ export interface FurnitureDocumentInterface extends Document {
   style?: string;
   price: number;
   imageUrl?: string;
+  quantity: number
 }
 
 /**
@@ -22,16 +23,14 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
   name: {
     type: String,
     required: true,
-    lowercase: true,
+    unique: true
   },
   description: {
     type: String,
     required: true,
-    lowercase: true,
   },
   category: {
     type: String,
-    lowercase: true,
   },
   dimensions: {
     type: String,
@@ -41,28 +40,26 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
         throw new Error("Dimensions format not valid");
       }
     },
-    lowercase: true,
   },
   materials: {
     type: [String],
-    lowercase: true,
   },
   color: {
     type: String,
     required: true,
-    lowercase: true,
   },
   style: {
     type: String,
-    lowercase: true,
   },
   price: {
     type: Number,
-    required: true,
   },
   imageUrl: {
     type: String,
   },
+  quantity: {
+    type: Number
+  }
 });
 
 /**

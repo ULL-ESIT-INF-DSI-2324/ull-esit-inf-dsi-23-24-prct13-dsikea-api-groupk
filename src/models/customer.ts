@@ -23,12 +23,10 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
   name: {
     type: String,
     required: true,
-    lowercase: true,
   },
   surname: {
     type: String,
     required: true,
-    lowercase: true,
   },
   telephoneNumber: {
     type: String,
@@ -49,12 +47,10 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
         throw new Error("Email format is not valid");
       }
     },
-    lowercase: true,
   },
   address: {
     type: String,
     required: true,
-    lowercase: true,
   },
   postalCode: {
     type: Number,
@@ -63,14 +59,12 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
   city: {
     type: String,
     required: true,
-    lowercase: true,
   },
   gender: {
     type: String,
     validate: (value: string) => {
       return ["male", "female", "other"].includes(value.toLowerCase());
     },
-    lowercase: true,
   },
   nif: {
     type: String,

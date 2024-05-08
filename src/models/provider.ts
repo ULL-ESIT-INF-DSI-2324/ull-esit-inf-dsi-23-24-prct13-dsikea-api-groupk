@@ -20,12 +20,10 @@ const ProviderSchema = new Schema<ProviderDocumentInterface>({
   name: {
     type: String,
     required: true,
-    lowercase: true,
   },
   address: {
     type: String,
     required: true,
-    lowercase: true,
   },
   telephoneNumber: {
     type: String,
@@ -45,8 +43,7 @@ const ProviderSchema = new Schema<ProviderDocumentInterface>({
       if (!value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
         throw new Error("Email format is not valid");
       }
-    },
-    lowercase: true,
+    }
   },
   website: {
     type: String,
@@ -61,7 +58,7 @@ const ProviderSchema = new Schema<ProviderDocumentInterface>({
       } else if (!validator.isAlphanumeric(value)) {
         throw new Error("Only Alphanumeric characters are allowed");
       }
-    },
+    }
   },
 });
 
