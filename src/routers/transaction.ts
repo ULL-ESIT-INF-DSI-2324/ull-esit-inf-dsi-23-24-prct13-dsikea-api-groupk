@@ -6,9 +6,6 @@ import { Provider } from "../models/provider.js";
 
 export const transactionRouter = express.Router();
 
-// Antes de todo, habria que realizar la comprobación de que los muebles involucrados esten en la base de datos y de que haya stock, lo eliminamos si se encuentran, por que se hizo la transaccion
-// Comprobar también si el cliente/proveedor existe también en la base de datos, de otra manera intuyo que se tendra que crear.
-
 /**
  * Post de la transacción
  */
@@ -80,3 +77,22 @@ transactionRouter.post("/transactions", async (req, res) => {
     return res.status(400).send(error);
   }
 });
+
+// FALTA
+transactionRouter.patch("/transactions", (req, res) => {
+
+})
+
+transactionRouter.delete("/transactions/:id", (req, res) => {
+
+})
+
+transactionRouter.get("/transactions", (req, res) => {
+
+})
+
+transactionRouter.get("/transactions", (req, res) => {
+  
+})
+
+

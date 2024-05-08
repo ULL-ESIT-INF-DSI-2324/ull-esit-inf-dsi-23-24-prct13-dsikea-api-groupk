@@ -20,7 +20,7 @@ furnitureRouter.post("/furnitures", (req, res) => {
   furniture
     .save()
     .then((furniture) => {
-      res.status(200).send(furniture);
+      res.status(201).send(furniture);
     })
     .catch((error) => {
       res.status(400).send(error);
@@ -40,13 +40,10 @@ furnitureRouter.get("/furnitures", (req, res) => {
         $regex: req.query.description as string,
         $options: "i",
       };
-    Furniture.find(filter)
-      .then((furnitures) => {
-        if (furnitures.length !== 0) {
-          res.status(200).send(furnitures);
-        } else {
-          res.status(404).send("Furniture not found");
-        }
+    Furniture.findOne(filter)
+      .then((furniture) => {
+        if (furniture) res.status(200).send(furniture);
+        else res.status(404).send("Furniture not found");
       })
       .catch((error) => {
         res.status(400).send(error);
@@ -93,10 +90,11 @@ furnitureRouter.patch("/furnitures", (req, res) => {
       "style",
       "price",
       "imageUrl",
+      "quantity"
     ];
     const actualUpdates = Object.keys(req.body);
     const isValidUpdate = actualUpdates.every((update) =>
-      allowedUpdates.includes(update),
+      allowedUpdates.includes(update)
     );
 
     if (!isValidUpdate) {
@@ -131,6 +129,7 @@ furnitureRouter.patch("/furnitures/:id", (req, res) => {
     "style",
     "price",
     "imageUrl",
+    "quantity"
   ];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) =>
