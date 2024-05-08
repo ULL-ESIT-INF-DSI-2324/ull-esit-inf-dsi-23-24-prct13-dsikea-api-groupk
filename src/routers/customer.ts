@@ -3,6 +3,9 @@ import { Customer } from "../models/customer.js";
 
 export const customerRouter = express.Router();
 
+/**
+ * Post de cliente
+ */
 customerRouter.post("/customers", (req, res) => {
   const customer = new Customer(req.body);
   customer
@@ -15,15 +18,19 @@ customerRouter.post("/customers", (req, res) => {
     });
 });
 
+/**
+ * Getter de cliente
+ */
 customerRouter.get("/customers", (req, res) => {
   const nif = req.query.nif;
   if (nif) {
-    Customer.find({nif: nif}).then((customers) => {
-      if (customers.length !== 0) {
-        res.status(200).send(customers);
-      } else {
-        res.status(404).send("Customer not found");
-      } 
+    Customer.find({ nif: nif })
+      .then((customers) => {
+        if (customers.length !== 0) {
+          res.status(200).send(customers);
+        } else {
+          res.status(404).send("Customer not found");
+        }
       })
       .catch((error) => {
         res.status(400).send(error);
@@ -33,6 +40,9 @@ customerRouter.get("/customers", (req, res) => {
   }
 });
 
+/**
+ * Getter del cliente por su id
+ */
 customerRouter.get("/customers/:id", (req, res) => {
   Customer.findById(req.params.id)
     .then((customer) => {
@@ -44,6 +54,9 @@ customerRouter.get("/customers/:id", (req, res) => {
     });
 });
 
+/**
+ * Patch del cliente
+ */
 customerRouter.patch("/customers", (req, res) => {
   const nif = req.query.nif;
   if (nif) {
@@ -80,6 +93,9 @@ customerRouter.patch("/customers", (req, res) => {
   } else res.status(400).send("Nif not provided");
 });
 
+/**
+ * Patch del cliente con su id
+ */
 customerRouter.patch("/customers/:id", (req, res) => {
   const allowedUpdates = [
     "name",
@@ -113,6 +129,9 @@ customerRouter.patch("/customers/:id", (req, res) => {
   }
 });
 
+/**
+ * Borrar el cliente deseado
+ */
 customerRouter.delete("/customers", (req, res) => {
   const nif = req.query.nif;
   if (nif) {
@@ -129,6 +148,9 @@ customerRouter.delete("/customers", (req, res) => {
   }
 });
 
+/**
+ * Borrar el cliente deseado por su id
+ */
 customerRouter.delete("/customers/:id", (req, res) => {
   Customer.findByIdAndDelete(req.params.id)
     .then((customer) => {

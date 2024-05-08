@@ -1,31 +1,37 @@
-import { Document, Schema, model} from "mongoose"
+import { Document, Schema, model } from "mongoose";
 
+/**
+ * Interfaz que extiende Document y define los datos de un mueble
+ */
 export interface FurnitureDocumentInterface extends Document {
-  name: string,
-  description: string,
-  category?: string,
-  dimensions: string,
-  materials?: string[],
-  color: string,
-  style?: string,
-  price: number,
-  imageUrl?: string
+  name: string;
+  description: string;
+  category?: string;
+  dimensions: string;
+  materials?: string[];
+  color: string;
+  style?: string;
+  price: number;
+  imageUrl?: string;
 }
 
+/**
+ * Schema para los muebles
+ */
 const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
   name: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   description: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   category: {
     type: String,
-    lowercase: true
+    lowercase: true,
   },
   dimensions: {
     type: String,
@@ -35,28 +41,34 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
         throw new Error("Dimensions format not valid");
       }
     },
-    lowercase: true
+    lowercase: true,
   },
   materials: {
     type: [String],
-    lowercase: true
+    lowercase: true,
   },
   color: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   style: {
     type: String,
-    lowercase: true
+    lowercase: true,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   imageUrl: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-export const Furniture = model<FurnitureDocumentInterface>("Furniture", FurnitureSchema);
+/**
+ * Instancia el mueble usando model
+ */
+export const Furniture = model<FurnitureDocumentInterface>(
+  "Furniture",
+  FurnitureSchema,
+);

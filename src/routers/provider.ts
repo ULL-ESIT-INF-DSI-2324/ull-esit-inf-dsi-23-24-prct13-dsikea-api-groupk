@@ -1,8 +1,11 @@
-import express from "express"
-import { Provider } from "../models/provider.js"
+import express from "express";
+import { Provider } from "../models/provider.js";
 
 export const providerRouter = express.Router();
 
+/**
+ * Post de proveedor
+ */
 providerRouter.post("/providers", (req, res) => {
   const provider = new Provider(req.body);
   provider
@@ -15,15 +18,19 @@ providerRouter.post("/providers", (req, res) => {
     });
 });
 
+/**
+ * Getter de proveedor
+ */
 providerRouter.get("/providers", (req, res) => {
   const cif = req.query.cif;
   if (cif) {
-    Provider.find({cif: cif}).then((providers) => {
-      if (providers.length !== 0) {
-        res.status(200).send(providers);
-      } else {
-        res.status(404).send("Provider not found");
-      } 
+    Provider.find({ cif: cif })
+      .then((providers) => {
+        if (providers.length !== 0) {
+          res.status(200).send(providers);
+        } else {
+          res.status(404).send("Provider not found");
+        }
       })
       .catch((error) => {
         res.status(400).send(error);
@@ -33,6 +40,9 @@ providerRouter.get("/providers", (req, res) => {
   }
 });
 
+/**
+ * Getter de proveedor por su id
+ */
 providerRouter.get("/providers/:id", (req, res) => {
   Provider.findById(req.params.id)
     .then((provider) => {
@@ -44,6 +54,9 @@ providerRouter.get("/providers/:id", (req, res) => {
     });
 });
 
+/**
+ * Patch del proveedor
+ */
 providerRouter.patch("/providers", (req, res) => {
   const cif = req.query.cif;
   if (cif) {
@@ -52,7 +65,7 @@ providerRouter.patch("/providers", (req, res) => {
       "address",
       "telephoneNumber",
       "email",
-      "website"
+      "website",
     ];
     const actualUpdates = Object.keys(req.body);
     const isValidUpdate = actualUpdates.every((update) =>
@@ -77,13 +90,16 @@ providerRouter.patch("/providers", (req, res) => {
   } else res.status(400).send("Cif not provided");
 });
 
+/**
+ * Patch del proveedor con su id
+ */
 providerRouter.patch("/providers/:id", (req, res) => {
   const allowedUpdates = [
     "name",
     "address",
     "telephoneNumber",
     "email",
-    "website"
+    "website",
   ];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) =>
@@ -107,6 +123,9 @@ providerRouter.patch("/providers/:id", (req, res) => {
   }
 });
 
+/**
+ * Borrar el proveedor deseado
+ */
 providerRouter.delete("/providers", (req, res) => {
   const cif = req.query.cif;
   if (cif) {
@@ -123,6 +142,9 @@ providerRouter.delete("/providers", (req, res) => {
   }
 });
 
+/**
+ * Borrar el proveedor deseado por su id
+ */
 providerRouter.delete("/providers/:id", (req, res) => {
   Provider.findByIdAndDelete(req.params.id)
     .then((provider) => {

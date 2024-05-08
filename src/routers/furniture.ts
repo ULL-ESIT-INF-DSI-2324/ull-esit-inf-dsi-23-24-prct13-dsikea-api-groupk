@@ -1,6 +1,9 @@
 import express from "express";
 import { Furniture } from "../models/furniture.js";
 
+/**
+ * Interfaz para el filtro de búsqueda
+ */
 interface FilterInterface {
   name?: string;
   color?: string;
@@ -9,6 +12,9 @@ interface FilterInterface {
 
 export const furnitureRouter = express.Router();
 
+/**
+ * Post de mueble
+ */
 furnitureRouter.post("/furnitures", (req, res) => {
   const furniture = new Furniture(req.body);
   furniture
@@ -21,6 +27,9 @@ furnitureRouter.post("/furnitures", (req, res) => {
     });
 });
 
+/**
+ * Getter de mueble
+ */
 furnitureRouter.get("/furnitures", (req, res) => {
   if (Object.keys(req.query).length !== 0) {
     const filter: FilterInterface = {};
@@ -47,6 +56,9 @@ furnitureRouter.get("/furnitures", (req, res) => {
   }
 });
 
+/**
+ * Getter del mueble por su id
+ */
 furnitureRouter.get("/furnitures/:id", (req, res) => {
   Furniture.findById(req.params.id)
     .then((furniture) => {
@@ -58,6 +70,9 @@ furnitureRouter.get("/furnitures/:id", (req, res) => {
     });
 });
 
+/**
+ * Patch del mueble
+ */
 furnitureRouter.patch("/furnitures", (req, res) => {
   if (Object.keys(req.query).length !== 0) {
     const filter: FilterInterface = {};
@@ -102,6 +117,9 @@ furnitureRouter.patch("/furnitures", (req, res) => {
   } else res.status(400).send("Query params not provided");
 });
 
+/**
+ * Patch del cliente con su id
+ */
 furnitureRouter.patch("/furnitures/:id", (req, res) => {
   const allowedUpdates = [
     "name",
@@ -136,6 +154,9 @@ furnitureRouter.patch("/furnitures/:id", (req, res) => {
   }
 });
 
+/**
+ * Borrar el mueble deseado
+ */
 furnitureRouter.delete("/furnitures", (req, res) => {
   if (Object.keys(req.query).length !== 0) {
     const filter: FilterInterface = {};
@@ -159,6 +180,9 @@ furnitureRouter.delete("/furnitures", (req, res) => {
   }
 });
 
+/**
+ * Borrar el mueble deseado por su id
+ */
 furnitureRouter.delete("/furnitures/:id", (req, res) => {
   Furniture.findByIdAndDelete(req.params.id)
     .then((furniture) => {

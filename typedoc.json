@@ -1,13 +1,14 @@
 {
   "entryPoints": [
-    "./src/Card.ts",
-    "./src/CardCollection.ts",
-    "./src/server.ts",
-    "./src/operations/AddCard.ts",
-    "./src/operations/DeleteCard.ts",
-    "./src/operations/ListCards.ts",
-    "./src/operations/ModifyCard.ts",
-    "./src/operations/ShowCard.ts",
+    "./src/models/customer.ts",
+    "./src/models/furniture.ts",
+    "./src/models/provider.ts",
+    "./src/models/transaction.ts",
+    "./src/routers/customer.ts",
+    "./src/routers/default.ts",
+    "./src/routers/furniture.ts",
+    "./src/routers/provider.ts",
+    "./src/routers/transaction.ts",
   ],
   "out": "./docs"
 }

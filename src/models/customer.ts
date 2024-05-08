@@ -1,6 +1,9 @@
 import { Document, Schema, model } from "mongoose";
-import validator from "validator"
+import validator from "validator";
 
+/**
+ * Interfaz que extiende Document y define los datos de un cliente
+ */
 export interface CustomerDocumentInterface extends Document {
   name: string;
   surname: string;
@@ -13,16 +16,19 @@ export interface CustomerDocumentInterface extends Document {
   nif: string;
 }
 
+/**
+ * Schema para los clientes
+ */
 const CustomerSchema = new Schema<CustomerDocumentInterface>({
   name: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   surname: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   telephoneNumber: {
     type: String,
@@ -43,12 +49,12 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
         throw new Error("Email format is not valid");
       }
     },
-    lowercase: true
+    lowercase: true,
   },
   address: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   postalCode: {
     type: Number,
@@ -57,14 +63,14 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
   city: {
     type: String,
     required: true,
-    lowercase: true
+    lowercase: true,
   },
   gender: {
     type: String,
     validate: (value: string) => {
-      return ["male", "female", "other"].includes(value.toLowerCase()); 
+      return ["male", "female", "other"].includes(value.toLowerCase());
     },
-    lowercase: true
+    lowercase: true,
   },
   nif: {
     type: String,
@@ -73,14 +79,16 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
     validate: (value: string) => {
       if (!value.match(/^[0-9]{8}[a-zA-Z]/)) {
         throw new Error("Invalid Nif");
-      }
-      else if (!validator.isAlphanumeric(value)) {
+      } else if (!validator.isAlphanumeric(value)) {
         throw new Error("Only Alphanumeric characters are allowed");
       }
-    }
+    },
   },
 });
 
+/**
+ * Instancia el cliente usando model
+ */
 export const Customer = model<CustomerDocumentInterface>(
   "Customer",
   CustomerSchema,
