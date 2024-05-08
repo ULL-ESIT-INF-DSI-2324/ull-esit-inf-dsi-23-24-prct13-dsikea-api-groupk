@@ -5,6 +5,8 @@
   "main": "basicFunctions.js",
   "type": "module",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
     "dev": "tsc-watch --onSuccess \"env-cmd -f ./config/dev.env node dist/index.js/\"",
     "doc": "typedoc",
     "test": "env-cmd -f ./config/test.env mocha --exit",
