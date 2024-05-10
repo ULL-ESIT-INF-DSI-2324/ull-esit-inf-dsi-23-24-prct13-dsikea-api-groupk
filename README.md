@@ -127,7 +127,7 @@ Para esta carpeta, seguiremos la idea de la carpeta anterior, explicaremos el fi
 
 ```
 
-ustomerRouter.post("/customers", (req, res) => {
+CustomerRouter.post("/customers", (req, res) => {
   const customer = new Customer(req.body);
   customer
     .save()
@@ -295,8 +295,49 @@ defaultRouter.all("*", (_, res) => {
 
 Terminada esta carpeta, en la que se incluye la implementación también de los otros 3 routers, comentaremos la siguiente.
 
+## DB
+
+Esta es la última carpeta que tenemos en src. Solo contiene un archivo, el de mongoose. Lo único que se hace en este archivo es establecer la conexión con MongoDB. Tiene la siguiente estructura:
+
+```
+connect(process.env.MONGODB_URL!)
+  .then(() => {
+    console.log("Connection to MongoDB server established");
+  })
+  .catch(() => {
+    console.log("Unable to connect to MongoDB server");
+  });
+```
+
+## Archivos index.ts y app.ts
+
+Por último, comentar los archivos que están alojados directamente en src, sin ninguna subcarpeta. Estos son index y app. El primero lo que hace es escuchar en un puerto y mostrar por pantalla que se está escuchando en ese puerto.
+
+```
+const port = process.env.PORT;
+
+app.listen(port, () => {
+  console.log("Server listening on", port);
+});
+```
+
+El segundo lo único que hace es instanciar todos los routers.
+
+```
+app.use(customerRouter);
+app.use(providerRouter);
+app.use(furnitureRouter);
+app.use(transactionRouter);
+app.use(defaultRouter);
+```
 
 ## Conclusiones
+
+Para finalizar, debemos destacar que esta es la última práctica de toda la asignatura, en la que hemos aplicado aspectos de Typescript que llevamos aprendiendo durante todo el curso. En esta concretamente, se nos pidió desarrollar un API REST, una aplicación más cercana a lo que podemos llegar a realizar en nuestros puestos de trabajo el día de mañana. 
+
+Comentar también que hemos creado pruebas usando supertest, como se nos especificaba en el guión. Además, la documentación la hemos hecho con Typedoc, el cubrimiento de código con Coveralls y el uso de Sonarcloud.
+
+Con esto damos por finalizado la asignatura, en la cual hemos aprendido un nuevo lenguaje de programación, que nos será de gran utilidad para el resto de nuestra vida como ingenieros. 
 
 ## Bibliografía
 

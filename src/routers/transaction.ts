@@ -78,20 +78,33 @@ transactionRouter.post("/transactions", async (req, res) => {
   }
 });
 
-// FALTA
+// FALTA POR HACER
+
+/**
+ * Patch de la transacción
+ */
 transactionRouter.patch("/transactions", (req, res) => {
 
 })
 
+/**
+ * Borrar la transacción deseada por su id
+ */
 transactionRouter.delete("/transactions/:id", (req, res) => {
 
 })
 
+/**
+ * Getter de la transacción
+ */
 transactionRouter.get("/transactions", (req, res) => {
 
 })
 
-transactionRouter.get("/transactions", (req, res) => {
+/**
+ * Getter de la transacción por su id
+ */
+transactionRouter.get("/transactions/:id", (req, res) => {
   
 })
 
