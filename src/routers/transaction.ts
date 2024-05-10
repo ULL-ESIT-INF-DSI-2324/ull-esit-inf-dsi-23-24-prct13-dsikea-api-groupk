@@ -78,14 +78,41 @@ transactionRouter.post("/transactions", async (req, res) => {
   }
 });
 
-// FALTA POR HACER
 
 /**
  * Patch de la transacción
  */
-transactionRouter.patch("/transactions", (req, res) => {
+transactionRouter.patch("/transactions/:id", async (req, res) => {
+  const transactionId = req.params.id;
+  const updates = req.body;
 
-})
+  try {
+    // Verificar si se proporcionaron actualizaciones válidas (propios de la transaccion)
+    const allowedUpdates = ["timestamp", "amount", "client", "company", "items"];
+    const isValidUpdate = Object.keys(updates).every(update => allowedUpdates.includes(update));
+
+    if (!isValidUpdate) {
+      return res.status(400).send("Invalid updates");
+    }
+
+    // Buscar la transacción por su ID y aplicar las actualizaciones
+    const transaction = await Transaction.findByIdAndUpdate(transactionId, updates, {
+      new: true,
+      runValidators: true
+    });
+
+    // Verificar si se encontró la transacción
+    if (!transaction) {
+      return res.status(404).send("Transaction not found");
+    }
+
+    // Enviar la transacción actualizada como respuesta
+    return res.status(200).send(transaction);
+  } catch (error) {
+    // ERRORES
+    return res.status(500).send("Internal Server Error");
+  }
+});
 
 /**
  * Borrar la transacción deseada por su id
@@ -109,11 +136,25 @@ transactionRouter.delete("/transactions/:id", (req, res) => {
 });
 
 /**
- * Getter de la transacción
+ * Getter de todas las transacciones
  */
-transactionRouter.get("/transactions", (req, res) => {
+transactionRouter.get("/transactions", async (req, res) => {
+  try {
+    // Obtenemos todas las transacciones de la base de datos
+    const transactions = await Transaction.find();
 
-})
+    // Verificamos si se encontraron transacciones
+    if (transactions.length === 0) {
+      return res.status(404).send("No transactions found");
+    }
+
+    // Enviamos las transacciones como respuesta
+    return res.status(200).send(transactions);
+  } catch (error) {
+    // ERRORES
+    return res.status(500).send("Internal Server Error");
+  }
+});
 
 /**
  * Getter de la transacción por su id
