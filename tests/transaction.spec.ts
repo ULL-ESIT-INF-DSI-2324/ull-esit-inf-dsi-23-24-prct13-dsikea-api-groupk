@@ -34,3 +34,23 @@ const secondFurniture = {
   imageUrl: "https://example.com/sofa.jpg1",
   quantity: 11
 }
+
+beforeEach(async () => {
+  await Transaction.deleteMany();
+  secondCustomerId = (await new Customer(secondCustomer).save())._id;
+  secondFurnitureId = (await new Furniture(secondFurniture).save())._id;
+});
+
+describe('POST /transactions', () => {
+  it('Should successfully create a new transaction', async () => {
+    const newTransaction = {
+      timestamp: "2024-05-10T12:00:00Z",
+      amount: 300,
+      client: secondCustomerId,
+      items: [secondFurnitureId]
+    };
+
+    const response = await request(app).post('/transactions').send(newTransaction).expect(201);
+    expect(response.body).to.include(newTransaction);
+  });
+});
