@@ -91,8 +91,22 @@ transactionRouter.patch("/transactions", (req, res) => {
  * Borrar la transacción deseada por su id
  */
 transactionRouter.delete("/transactions/:id", (req, res) => {
+  // Obtenemos el ID de la transacción de los parámetros de la URL
+  const transactionId = req.params.id;
 
-})
+  // Usamos Transaction para buscar y eliminar la transacción.
+  Transaction.findByIdAndDelete(transactionId)
+    .then((transaction) => {
+      if (!transaction) {
+        res.status(404).send("Transaction not found");
+      } else {
+        res.status(200).send(transaction);
+      }
+    })
+    .catch((error) => {
+      res.status(400).send(error);
+    });
+});
 
 /**
  * Getter de la transacción
@@ -105,7 +119,25 @@ transactionRouter.get("/transactions", (req, res) => {
  * Getter de la transacción por su id
  */
 transactionRouter.get("/transactions/:id", (req, res) => {
-  
-})
+  // Obtenemos el ID de la transacción de los parámetros de la URL
+  const transactionId = req.params.id;
+
+  // Usamos Transaction para buscar la transacción por su ID
+  Transaction.findById(transactionId)
+    .populate("items")
+    .populate("client")
+    .populate("company")
+    .exec()
+    .then((transaction) => {
+      if (!transaction) {
+        res.status(404).send("Transaction not found");
+      } else {
+        res.status(200).send(transaction);
+      }
+    })
+    .catch((error) => {
+      res.status(400).send(error);
+    });
+});
 
 
