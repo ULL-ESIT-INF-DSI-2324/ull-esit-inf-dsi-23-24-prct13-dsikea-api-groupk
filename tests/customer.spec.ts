@@ -172,5 +172,52 @@ describe('DELETE /customers/:id', () => {
 });
 
 
+describe('POST /customers - Validación de formato de datos', () => {
+  it('Should fail creating a new customer when email format is invalid', async () => {
+    const customerWithInvalidEmail = { ...firstCustomer, email: 'invalid-email' };
+
+    await request(app)
+      .post('/customers')
+      .send(customerWithInvalidEmail)
+      .expect(400);
+  });
+
+  it('Should fail creating a new customer when telephone number format is invalid', async () => {
+    const customerWithInvalidTelephone = { ...firstCustomer, telephoneNumber: '1234' };
+
+    await request(app)
+      .post('/customers')
+      .send(customerWithInvalidTelephone)
+      .expect(400);
+  });
+
+  it('Should fail creating a new customer when NIF format is invalid', async () => {
+    const customerWithInvalidNIF = { ...firstCustomer, nif: 'invalid-nif' };
+
+    await request(app)
+      .post('/customers')
+      .send(customerWithInvalidNIF)
+      .expect(400);
+  });
+});
+
+describe('PATCH /customers - Validación de actualizaciones permitidas', () => {
+  it('Should fail updating a customer when trying to update a non-allowed field', async () => {
+    const updates = { nonAllowedField: 'value' };
+
+    await request(app)
+      .patch(`/customers/${firstCustomerId}`)
+      .send(updates)
+      .expect(400);
+  });
+});
+
+describe('GET /customers - Gestión de errores', () => {
+  it('Should return 400 if NIF is not provided when getting a customer', async () => {
+    await request(app)
+      .get('/customers')
+      .expect(400);
+  });
+});
 
 
