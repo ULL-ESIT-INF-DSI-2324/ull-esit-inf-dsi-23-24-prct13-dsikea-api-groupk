@@ -315,3 +315,93 @@ describe('GET /transactions - No Transactions Found', () => {
     expect(response.body).to.be.an('object');
   });
 });
+
+
+///PRUEBAS PARA COMPROBAR LOS 404
+
+describe('GET /transactions/:id - Transaction Not Found', () => {
+  it('Should return 404 Not Found if transaction not found', async () => {
+    const nonExistingTransactionId = '123456789012345678901234';
+
+    const response = await request(app)
+      .get(`/transactions/${nonExistingTransactionId}`)
+      .expect(404);
+
+    expect(response.text).to.equal('Transaction not found');
+  });
+});
+
+
+describe('DELETE /transactions/:id - Transaction Not Found', () => {
+  it('Should return 404 Not Found if transaction not found', async () => {
+    const nonExistingTransactionId = '123456789012345678901234';
+
+    const response = await request(app)
+      .delete(`/transactions/${nonExistingTransactionId}`)
+      .expect(404);
+
+    expect(response.text).to.equal('Transaction not found');
+  });
+});
+
+describe('PATCH /transactions/:id - Transaction Not Found', () => {
+  it('Should return 404 Not Found if transaction not found', async () => {
+    const nonExistingTransactionId = '123456789012345678901234';
+    const updates = { amount: 1000 };
+
+    const response = await request(app)
+      .patch(`/transactions/${nonExistingTransactionId}`)
+      .send(updates)
+      .expect(404);
+
+    expect(response.text).to.equal('Transaction not found');
+  });
+});
+
+describe('GET /transactions - No Transactions Found', () => {
+  it('Should return an empty array if no transactions found', async () => {
+    const response = await request(app)
+      .get('/transactions')
+      .expect(404);
+
+    expect(response.text).to.equal('No transactions found');
+  });
+});
+
+
+
+describe('Error handling - Internal Server Error', () => {
+  it('Should return 500 Internal Server Error on internal server error', async () => {
+    const invalidTransactionId = 'invalidId';
+
+    const updates = {
+      timestamp: new Date(),
+      amount: 500,
+    };
+
+    // Solicitud PATCH con un ID inválido para provocar un error interno del servidor
+    const response = await request(app)
+      .patch(`/transactions/${invalidTransactionId}`)
+      .send(updates)
+      .expect(500);
+
+    expect(response.text).to.equal('Internal Server Error');
+  });
+});
+
+
+describe('Error handling - Invalid Updates', () => {
+  it('Should return 400 Bad Request on invalid updates', async () => {
+    const transactionId = 'validId';
+    const invalidUpdates = {
+      invalidField: 'value',
+    };
+
+    const response = await request(app)
+      .patch(`/transactions/${transactionId}`)
+      .send(invalidUpdates)
+      .expect(400);
+
+    expect(response.text).to.equal('Invalid updates');
+  });
+});
