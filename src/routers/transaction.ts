@@ -178,5 +178,3 @@ transactionRouter.get("/transactions/:id", (req, res) => {
       res.status(400).send(error);
     });
 });
-
-
