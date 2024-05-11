@@ -65,8 +65,6 @@ transactionRouter.post("/transactions", async (req, res) => {
         });
       } else return res.status(404).send("Company not found");
     }
-
-    console.log(rawTransaction);
     const transaction = new Transaction(rawTransaction);
     await transaction.save();
 

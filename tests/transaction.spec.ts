@@ -44,13 +44,16 @@ beforeEach(async () => {
 describe('POST /transactions', () => {
   it('Should successfully create a new transaction', async () => {
     const newTransaction = {
-      timestamp: "2024-05-10T12:00:00Z",
-      amount: 300,
-      client: secondCustomerId,
-      items: [secondFurnitureId]
+      client: secondCustomer,
+      items: [secondFurniture]
     };
 
     const response = await request(app).post('/transactions').send(newTransaction).expect(201);
-    expect(response.body).to.include(newTransaction);
+    expect(response.body.client).to.include({
+      name: secondCustomer.name,
+    });
+    expect(response.body.items[0]).to.include({
+      name: secondFurniture.name,
+    });
   });
 });
