@@ -307,9 +307,7 @@ describe('GET /transactions/:id - Transaction Not Found', () => {
 // Prueba para verificar que se maneja correctamente el caso de una solicitud GET de transacciones cuando no hay ninguna
 describe('GET /transactions - No Transactions Found', () => {
   it('Should return an empty array if no transactions found', async () => {
-    // Limpiar todas las transacciones existentes
-    //await Transaction.deleteMany();
-
+    
     const response = await request(app)
       .get('/transactions')
       .expect(404);

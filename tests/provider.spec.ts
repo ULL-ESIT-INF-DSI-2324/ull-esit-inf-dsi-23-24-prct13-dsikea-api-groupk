@@ -150,3 +150,68 @@ describe('DELETE /providers/:id', () => {
     await request(app).delete("/providers/663ba5184f2c9c380b980826").expect(404);
   });
 });
+
+
+/////////////////////////
+
+describe('POST /providers - Validación de campos requeridos', () => {
+  it('Should fail creating a new provider when required fields are missing', async () => {
+    const invalidProvider = {
+      // Falta el campo "name"
+      address: "123 Main Street",
+      telephoneNumber: "+34645678901",
+      email: "test@hotmail.com"
+    };
+    expect((await request(app).post('/providers').send(invalidProvider).expect(400)).body).to.include({});
+    expect((await Provider.find()).length).to.equal(1);
+  });
+});
+
+describe('POST /providers - Validación de formato de datos', () => {
+  it('Should fail creating a new provider when email format is invalid', async () => {
+    const providerWithInvalidEmail = { ...firstProvider, email: 'invalid-email' };
+
+    await request(app)
+      .post('/providers')
+      .send(providerWithInvalidEmail)
+      .expect(400);
+  });
+
+
+it('Should fail creating a new provider when telephone number format is invalid', async () => {
+  const providerWithInvalidTelephone = { ...firstProvider, telephoneNumber: '1234' };
+
+  await request(app)
+    .post('/providers')
+    .send(providerWithInvalidTelephone)
+    .expect(400);
+});
+
+it('Should fail creating a new provider when CIF format is invalid', async () => {
+  const providerWithInvalidCIF = { ...firstProvider, cif: 'invalid-cif' };
+
+  await request(app)
+    .post('/providers')
+    .send(providerWithInvalidCIF)
+    .expect(400);
+});
+});
+
+describe('PATCH /providers - Validación de actualizaciones permitidas', () => {
+  it('Should fail updating a provider when trying to update a non-allowed field', async () => {
+    const updates = { nonAllowedField: 'value' };
+
+    await request(app)
+      .patch(`/providers/${firstProviderId}`)
+      .send(updates)
+      .expect(400);
+  });
+});
+
+describe('GET /providers - Gestión de errores', () => {
+  it('Should return 400 if CIF is not provided when getting a provider', async () => {
+    await request(app)
+      .get('/providers')
+      .expect(400);
+  });
+});
