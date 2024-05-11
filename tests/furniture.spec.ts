@@ -403,5 +403,58 @@ describe('DELETE /furnitures/:id', () => {
 });
 
 
+describe('GET /furnitures/:id', () => {
+  it('Should return 404 when fetching a non-existing furniture by ID', async () => {
+    const nonExistingId = '663ba5184f2c9c380b980826';
+    const response = await request(app)
+      .get(`/furnitures/${nonExistingId}`)
+      .expect(404);
+    expect(response.text).to.equal('Furniture not found');
+  });
+});
 
+describe('PATCH /furnitures/:id', () => {
+  it('Should return 404 when updating a non-existing furniture by ID', async () => {
+    const nonExistingId = '663ba5184f2c9c380b980826';
+    const response = await request(app)
+      .patch(`/furnitures/${nonExistingId}`)
+      .send({ name: "Updated Sofa" })
+      .expect(404);
+    expect(response.text).to.equal('Furniture not found');
+  });
+});
 
+describe('DELETE /furnitures/:id', () => {
+  it('Should return 404 when deleting a non-existing furniture by ID', async () => {
+    const nonExistingId = '663ba5184f2c9c380b980826';
+    const response = await request(app)
+      .delete(`/furnitures/${nonExistingId}`)
+      .expect(404);
+    expect(response.text).to.equal('furniture not found');
+  });
+});
+
+describe('Furniture Model Validation', () => {
+  describe('Invalid Dimensions Format', () => {
+    it('Should throw an error if dimensions format is not valid', async () => {
+      const furniture = new Furniture({
+        name: "Test Furniture",
+        description: "Test description",
+        dimensions: "200x30",
+        color: "Blue",
+        price: 100,
+        quantity: 1
+      });
+
+      let error;
+      try {
+        await furniture.save();
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error).to.exist;
+      expect(error.message).to.equal('Furniture validation failed: dimensions: Dimensions format not valid');
+    });
+  });
+});
