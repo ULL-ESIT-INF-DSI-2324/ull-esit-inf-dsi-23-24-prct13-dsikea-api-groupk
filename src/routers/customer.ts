@@ -5,6 +5,16 @@ export const customerRouter = express.Router();
 
 /**
  * Post de cliente
+ * @param {string} name - Nombre del cliente
+ * @param {string} surname - Apellido del cliente
+ * @param {string} telephoneNumber - Número de teléfono del cliente
+ * @param {string} email - Correo electrónico del cliente
+ * @param {string} address - Dirección del cliente
+ * @param {number} postalCode - Código postal del cliente
+ * @param {string} city - Ciudad del cliente
+ * @param {string} gender - Género del cliente
+ * @param {string} nif - NIF del cliente
+ * 
  */
 customerRouter.post("/customers", (req, res) => {
   const customer = new Customer(req.body);
@@ -20,6 +30,7 @@ customerRouter.post("/customers", (req, res) => {
 
 /**
  * Getter de cliente
+ * @param {string} nif - NIF del cliente
  */
 customerRouter.get("/customers", (req, res) => {
   const nif = req.query.nif;
@@ -39,6 +50,8 @@ customerRouter.get("/customers", (req, res) => {
 
 /**
  * Getter del cliente por su id
+ * @param {string} id - ID del cliente
+ * 
  */
 customerRouter.get("/customers/:id", (req, res) => {
   Customer.findById(req.params.id)
@@ -53,6 +66,8 @@ customerRouter.get("/customers/:id", (req, res) => {
 
 /**
  * Patch del cliente
+ * @param {string} nif - NIF del cliente
+ * 
  */
 customerRouter.patch("/customers", (req, res) => {
   const nif = req.query.nif;
@@ -92,6 +107,8 @@ customerRouter.patch("/customers", (req, res) => {
 
 /**
  * Patch del cliente con su id
+ * @param {string} id - ID del cliente
+ * 
  */
 customerRouter.patch("/customers/:id", (req, res) => {
   const allowedUpdates = [
@@ -128,6 +145,8 @@ customerRouter.patch("/customers/:id", (req, res) => {
 
 /**
  * Borrar el cliente deseado
+ * @param {string} nif - NIF del cliente
+ * 
  */
 customerRouter.delete("/customers", (req, res) => {
   const nif = req.query.nif;
@@ -147,6 +166,8 @@ customerRouter.delete("/customers", (req, res) => {
 
 /**
  * Borrar el cliente deseado por su id
+ * @param {string} id - ID del cliente
+ * 
  */
 customerRouter.delete("/customers/:id", (req, res) => {
   Customer.findByIdAndDelete(req.params.id)

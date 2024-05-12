@@ -12,6 +12,11 @@ app.use(express.json());
 
 /**
  * Instanciamos los routers
+ * @module routers/customer
+ * @module routers/provider
+ * @module routers/furniture
+ * @module routers/transaction
+ * @module routers/default
  */
 app.use(customerRouter);
 app.use(providerRouter);

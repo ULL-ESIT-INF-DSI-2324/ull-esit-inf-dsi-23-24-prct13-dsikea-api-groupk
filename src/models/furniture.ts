@@ -2,6 +2,19 @@ import { Document, Schema, model } from "mongoose";
 
 /**
  * Interfaz que extiende Document y define los datos de un mueble
+ * @interface FurnitureDocumentInterface
+ * @extends {Document}
+ * @property {string} name - Nombre del mueble
+ * @property {string} description - Descripción del mueble
+ * @property {string} category - Categoría del mueble
+ * @property {string} dimensions - Dimensiones del mueble
+ * @property {string[]} materials - Materiales del mueble
+ * @property {string} color - Color del mueble
+ * @property {string} style - Estilo del mueble
+ * @property {number} price - Precio del mueble
+ * @property {string} imageUrl - URL de la imagen del mueble
+ * @property {number} quantity - Cantidad de muebles
+ * 
  */
 export interface FurnitureDocumentInterface extends Document {
   name: string;
@@ -18,6 +31,9 @@ export interface FurnitureDocumentInterface extends Document {
 
 /**
  * Schema para los muebles
+ * @const FurnitureSchema
+ * @type {Schema<FurnitureDocumentInterface>}
+ * 
  */
 const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
   name: {
@@ -64,6 +80,9 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
 
 /**
  * Instancia el mueble usando model
+ * @const Furniture
+ * @type {Model<FurnitureDocumentInterface>}
+ * 
  */
 export const Furniture = model<FurnitureDocumentInterface>(
   "Furniture",

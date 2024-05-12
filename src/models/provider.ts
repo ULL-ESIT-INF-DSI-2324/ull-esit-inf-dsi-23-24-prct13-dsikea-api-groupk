@@ -3,6 +3,15 @@ import validator from "validator";
 
 /**
  * Interfaz que extiende Document y define los datos de un proveedor
+ * @interface ProviderDocumentInterface
+ * @extends {Document}
+ * @property {string} name - Nombre del proveedor
+ * @property {string} address - Dirección del proveedor
+ * @property {string} telephoneNumber - Número de teléfono del proveedor
+ * @property {string} email - Correo electrónico del proveedor
+ * @property {string} website - Sitio web del proveedor
+ * @property {string} cif - CIF del proveedor
+ * 
  */
 export interface ProviderDocumentInterface extends Document {
   name: string;
@@ -15,6 +24,9 @@ export interface ProviderDocumentInterface extends Document {
 
 /**
  * Schema para los proveedores
+ * @const ProviderSchema
+ * @type {Schema<ProviderDocumentInterface>}
+ * 
  */
 const ProviderSchema = new Schema<ProviderDocumentInterface>({
   name: {
@@ -64,6 +76,9 @@ const ProviderSchema = new Schema<ProviderDocumentInterface>({
 
 /**
  * Instancia el proveedor usando model
+ * @const Provider
+ * @type {Model<ProviderDocumentInterface>}
+ * 
  */
 export const Provider = model<ProviderDocumentInterface>(
   "Provider",

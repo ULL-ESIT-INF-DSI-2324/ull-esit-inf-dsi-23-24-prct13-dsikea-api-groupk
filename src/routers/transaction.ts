@@ -8,6 +8,12 @@ export const transactionRouter = express.Router();
 
 /**
  * Post de la transacción
+ * @param {Date} timestamp - Fecha y hora de la transacción
+ * @param {number} amount - Monto de la transacción
+ * @param {CustomerDocumentInterface} client
+ * @param {ProviderDocumentInterface} company
+ * @param {FurnitureDocumentInterface[]} items
+ * 
  */
 transactionRouter.post("/transactions", async (req, res) => {
   const itemsIDs = new Set();
@@ -78,6 +84,13 @@ transactionRouter.post("/transactions", async (req, res) => {
 
 /**
  * Patch de la transacción
+ * @param {string} id - ID de la transacción
+ * @param {Date} timestamp - Fecha y hora de la transacción
+ * @param {number} amount - Monto de la transacción
+ * @param {CustomerDocumentInterface} client
+ * @param {ProviderDocumentInterface} company
+ * @param {FurnitureDocumentInterface[]} items
+ * 
  */
 transactionRouter.patch("/transactions/:id", async (req, res) => {
   const transactionId = req.params.id;
@@ -125,6 +138,8 @@ transactionRouter.patch("/transactions/:id", async (req, res) => {
 
 /**
  * Borrar la transacción deseada por su id
+ * @param {string} id - ID de la transacción
+ * 
  */
 transactionRouter.delete("/transactions/:id", (req, res) => {
   // Obtenemos el ID de la transacción de los parámetros de la URL
@@ -146,6 +161,8 @@ transactionRouter.delete("/transactions/:id", (req, res) => {
 
 /**
  * Getter de todas las transacciones
+ * @returns {TransactionDocumentInterface[]} - Todas las transacciones
+ * 
  */
 transactionRouter.get("/transactions", async (req, res) => {
   try {
@@ -167,6 +184,9 @@ transactionRouter.get("/transactions", async (req, res) => {
 
 /**
  * Getter de la transacción por su id
+ * @param {string} id - ID de la transacción
+ * @returns {TransactionDocumentInterface} - Transacción deseada
+ * 
  */
 transactionRouter.get("/transactions/:id", (req, res) => {
   // Obtenemos el ID de la transacción de los parámetros de la URL

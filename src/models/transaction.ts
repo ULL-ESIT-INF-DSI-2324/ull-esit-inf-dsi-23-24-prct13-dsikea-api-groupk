@@ -5,6 +5,14 @@ import { ProviderDocumentInterface } from "./provider.js";
 
 /**
  * Interfaz que extiende Document y define los datos de una transacción
+ * @interface TransactionDocumentInterface
+ * @extends {Document}
+ * @property {Date} timestamp - Fecha y hora de la transacción
+ * @property {number} amount - Monto de la transacción
+ * @property {CustomerDocumentInterface} client - Cliente de la transacción
+ * @property {ProviderDocumentInterface} company - Compañía de la transacción
+ * @property {FurnitureDocumentInterface[]} items - Muebles de la transacción
+ * 
  */
 interface TransactionDocumentInterface extends Document {
   timestamp: Date;
@@ -16,6 +24,9 @@ interface TransactionDocumentInterface extends Document {
 
 /**
  * Schema para las transacciones
+ * @const TransactionSchema
+ * @type {Schema<TransactionDocumentInterface>}
+ * 
  */
 const TransactionSchema = new Schema<TransactionDocumentInterface>({
   timestamp: {
@@ -58,6 +69,9 @@ TransactionSchema.pre(
 
 /**
  * Instancia la transacción usando model
+ * @const Transaction
+ * @type {Model<TransactionDocumentInterface>}
+ * 
  */
 export const Transaction = model<TransactionDocumentInterface>(
   "Transaction",

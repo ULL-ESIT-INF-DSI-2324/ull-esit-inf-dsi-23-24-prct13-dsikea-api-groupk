@@ -5,6 +5,13 @@ export const providerRouter = express.Router();
 
 /**
  * Post de proveedor
+ * @param {string} name - Nombre del proveedor
+ * @param {string} cif - CIF del proveedor
+ * @param {string} address - Dirección del proveedor
+ * @param {string} telephoneNumber - Número de teléfono del proveedor
+ * @param {string} email - Correo electrónico del proveedor
+ * @param {string} website - Sitio web del proveedor
+ * 
  */
 providerRouter.post("/providers", (req, res) => {
   const provider = new Provider(req.body);
@@ -20,6 +27,8 @@ providerRouter.post("/providers", (req, res) => {
 
 /**
  * Getter de proveedor
+ * @param {string} cif - CIF del proveedor
+ * 
  */
 providerRouter.get("/providers", (req, res) => {
   const cif = req.query.cif;
@@ -42,6 +51,8 @@ providerRouter.get("/providers", (req, res) => {
 
 /**
  * Getter de proveedor por su id
+ * @param {string} id - ID del proveedor
+ * 
  */
 providerRouter.get("/providers/:id", (req, res) => {
   Provider.findById(req.params.id)
@@ -56,6 +67,8 @@ providerRouter.get("/providers/:id", (req, res) => {
 
 /**
  * Patch del proveedor
+ * @param {string} cif - CIF del proveedor
+ * 
  */
 providerRouter.patch("/providers", (req, res) => {
   const cif = req.query.cif;
@@ -92,6 +105,8 @@ providerRouter.patch("/providers", (req, res) => {
 
 /**
  * Patch del proveedor con su id
+ * @param {string} id - ID del proveedor
+ * 
  */
 providerRouter.patch("/providers/:id", (req, res) => {
   const allowedUpdates = [
@@ -125,6 +140,8 @@ providerRouter.patch("/providers/:id", (req, res) => {
 
 /**
  * Borrar el proveedor deseado
+ * @param {string} cif - CIF del proveedor
+ * 
  */
 providerRouter.delete("/providers", (req, res) => {
   const cif = req.query.cif;
@@ -144,6 +161,8 @@ providerRouter.delete("/providers", (req, res) => {
 
 /**
  * Borrar el proveedor deseado por su id
+ * @param {string} id - ID del proveedor
+ * 
  */
 providerRouter.delete("/providers/:id", (req, res) => {
   Provider.findByIdAndDelete(req.params.id)

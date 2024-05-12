@@ -3,6 +3,18 @@ import validator from "validator";
 
 /**
  * Interfaz que extiende Document y define los datos de un cliente
+ * @interface CustomerDocumentInterface
+ * @extends {Document}
+ * @property {string} name - Nombre del cliente
+ * @property {string} surname - Apellido del cliente
+ * @property {string} telephoneNumber - Número de teléfono del cliente
+ * @property {string} email - Correo electrónico del cliente
+ * @property {string} address - Dirección del cliente
+ * @property {number} postalCode - Código postal del cliente
+ * @property {string} city - Ciudad del cliente
+ * @property {string} gender - Género del cliente
+ * @property {string} nif - NIF del cliente
+ * 
  */
 export interface CustomerDocumentInterface extends Document {
   name: string;
@@ -18,6 +30,9 @@ export interface CustomerDocumentInterface extends Document {
 
 /**
  * Schema para los clientes
+ * @const CustomerSchema
+ * @type {Schema<CustomerDocumentInterface>}
+ * 
  */
 const CustomerSchema = new Schema<CustomerDocumentInterface>({
   name: {
@@ -82,6 +97,9 @@ const CustomerSchema = new Schema<CustomerDocumentInterface>({
 
 /**
  * Instancia el cliente usando model
+ * @const Customer
+ * @type {Model<CustomerDocumentInterface>}
+ * 
  */
 export const Customer = model<CustomerDocumentInterface>(
   "Customer",
