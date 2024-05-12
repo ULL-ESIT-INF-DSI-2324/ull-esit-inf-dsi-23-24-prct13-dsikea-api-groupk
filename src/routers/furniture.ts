@@ -90,11 +90,11 @@ furnitureRouter.patch("/furnitures", (req, res) => {
       "style",
       "price",
       "imageUrl",
-      "quantity"
+      "quantity",
     ];
     const actualUpdates = Object.keys(req.body);
     const isValidUpdate = actualUpdates.every((update) =>
-      allowedUpdates.includes(update)
+      allowedUpdates.includes(update),
     );
 
     if (!isValidUpdate) {
@@ -129,7 +129,7 @@ furnitureRouter.patch("/furnitures/:id", (req, res) => {
     "style",
     "price",
     "imageUrl",
-    "quantity"
+    "quantity",
   ];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) =>

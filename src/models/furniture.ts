@@ -13,7 +13,7 @@ export interface FurnitureDocumentInterface extends Document {
   style?: string;
   price: number;
   imageUrl?: string;
-  quantity: number
+  quantity: number;
 }
 
 /**
@@ -23,7 +23,7 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   description: {
     type: String,
@@ -58,8 +58,8 @@ const FurnitureSchema = new Schema<FurnitureDocumentInterface>({
     type: String,
   },
   quantity: {
-    type: Number
-  }
+    type: Number,
+  },
 });
 
 /**

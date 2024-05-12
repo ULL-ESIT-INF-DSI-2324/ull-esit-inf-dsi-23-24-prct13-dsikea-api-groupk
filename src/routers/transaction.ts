@@ -76,7 +76,6 @@ transactionRouter.post("/transactions", async (req, res) => {
   }
 });
 
-
 /**
  * Patch de la transacción
  */
@@ -86,18 +85,30 @@ transactionRouter.patch("/transactions/:id", async (req, res) => {
 
   try {
     // Verificar si se proporcionaron actualizaciones válidas (propios de la transaccion)
-    const allowedUpdates = ["timestamp", "amount", "client", "company", "items"];
-    const isValidUpdate = Object.keys(updates).every(update => allowedUpdates.includes(update));
+    const allowedUpdates = [
+      "timestamp",
+      "amount",
+      "client",
+      "company",
+      "items",
+    ];
+    const isValidUpdate = Object.keys(updates).every((update) =>
+      allowedUpdates.includes(update),
+    );
 
     if (!isValidUpdate) {
       return res.status(400).send("Invalid updates");
     }
 
     // Buscar la transacción por su ID y aplicar las actualizaciones
-    const transaction = await Transaction.findByIdAndUpdate(transactionId, updates, {
-      new: true,
-      runValidators: true
-    });
+    const transaction = await Transaction.findByIdAndUpdate(
+      transactionId,
+      updates,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     // Verificar si se encontró la transacción
     if (!transaction) {

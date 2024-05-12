@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 import "./db/mongoose.js";
 import { defaultRouter } from "./routers/default.js";
 import { customerRouter } from "./routers/customer.js";
@@ -18,5 +18,3 @@ app.use(providerRouter);
 app.use(furnitureRouter);
 app.use(transactionRouter);
 app.use(defaultRouter);
-
-
