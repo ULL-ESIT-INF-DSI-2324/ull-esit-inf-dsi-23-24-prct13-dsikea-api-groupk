@@ -1,6 +1,6 @@
 import { connect } from "mongoose";
 
-connect('mongodb://127.0.0.1:27017/dsikea')
+connect(process.env.MONGODB_URL!)
   .then(() => {
     console.log("Connection to MongoDB server established");
   })
