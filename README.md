@@ -331,6 +331,10 @@ app.use(transactionRouter);
 app.use(defaultRouter);
 ```
 
+## Despliegue
+Para desplegar la API se ha utilizado la herramienta Render, pero, previamente ha hecho falta desplegar también la base de datos, es por ello que además de Render se ha usado MongoDB Atlas para este último propósito. Con la base de datos en funcionamiento se procedió al despliegue de la API, que resultó en el siguiente enlace al que se pueden hacer peticiones:
+https://ull-esit-inf-dsi-23-24-prct13-dsikea-api-kwlc.onrender.com
+
 ## Conclusiones
 
 Para finalizar, debemos destacar que esta es la última práctica de toda la asignatura, en la que hemos aplicado aspectos de Typescript que llevamos aprendiendo durante todo el curso. En esta concretamente, se nos pidió desarrollar un API REST, una aplicación más cercana a lo que podemos llegar a realizar en nuestros puestos de trabajo el día de mañana. 
